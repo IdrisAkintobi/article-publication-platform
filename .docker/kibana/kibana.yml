@@ -24,11 +24,11 @@ elasticsearch.username: 'kibana_system'
 elasticsearch.password: 'elastic'
 
 # You'll have to uncomment the following lines if you want to use SSL after running the setup-elasticsearch-ssl.sh script
-# server.ssl.enabled: true
-# elasticsearch.ssl.verificationMode: certificate
-# elasticsearch.ssl.certificateAuthorities: ["/usr/share/kibana/config/certs/ca.crt"]
-# server.ssl.certificate: "/usr/share/kibana/config/certs/kibana.crt"
-# server.ssl.key: "/usr/share/kibana/config/certs/kibana.key"
+server.ssl.enabled: true
+elasticsearch.ssl.verificationMode: certificate
+elasticsearch.ssl.certificateAuthorities: ["/usr/share/kibana/config/certs/ca.crt"]
+server.ssl.certificate: "/usr/share/kibana/config/certs/kibana.crt"
+server.ssl.key: "/usr/share/kibana/config/certs/kibana.key"
 
 # Enables SSL for outgoing requests from Kibana to Elasticsearch.
 # elasticsearch.ssl.certificate: /path/to/your/client.crt

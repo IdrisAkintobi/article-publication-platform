@@ -19,8 +19,8 @@ elasticsearch-password = "${MONSTACHE_ES_PASS}"
 elasticsearch-max-conns = 4
 
 # Elasticsearch ssl setup
-# elasticsearch-pem-file = "/user/share/monstache/config/cert/ca.crt"
-# elasticsearch-pki-auth = { cert-file = "/user/share/monstache/config/cert/monstache.crt", key-file = "/user/share/monstache/config/cert/monstache.key" }
+elasticsearch-pem-file = "/user/share/monstache/config/cert/ca.crt"
+elasticsearch-pki-auth = { cert-file = "/user/share/monstache/config/cert/monstache.crt", key-file = "/user/share/monstache/config/cert/monstache.key" }
 
 # The number of seconds to wait on the initial health check to Elasticsearch to respond before giving up and exiting.
 elasticsearch-healthcheck-timeout-startup = 120

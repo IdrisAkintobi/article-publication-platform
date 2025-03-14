@@ -20,18 +20,18 @@ xpack.security.enabled: true
 
 # # Enable or disable encryption for HTTP traffic.
 # You'll have to uncomment the following lines if you want to use SSL for http and transport after running the setup-elasticsearch-ssl.sh script
-# xpack.security.http.ssl.enabled: true
-# xpack.security.http.ssl.verification_mode: certificate
-# xpack.security.http.ssl.key: /usr/share/elasticsearch/config/certs/elasticsearch.key
-# xpack.security.http.ssl.certificate: /usr/share/elasticsearch/config/certs/elasticsearch.crt
-# xpack.security.http.ssl.certificate_authorities: [ "/usr/share/elasticsearch/config/certs/ca.crt" ]
+xpack.security.http.ssl.enabled: true
+xpack.security.http.ssl.verification_mode: certificate
+xpack.security.http.ssl.key: /usr/share/elasticsearch/config/certs/elasticsearch.key
+xpack.security.http.ssl.certificate: /usr/share/elasticsearch/config/certs/elasticsearch.crt
+xpack.security.http.ssl.certificate_authorities: [ "/usr/share/elasticsearch/config/certs/ca.crt" ]
 
-# # Enable or disable encryption for transport traffic.
-# xpack.security.transport.ssl.enabled: true
-# xpack.security.transport.ssl.verification_mode: certificate
-# xpack.security.transport.ssl.key: /usr/share/elasticsearch/config/certs/elasticsearch.key
-# xpack.security.transport.ssl.certificate: /usr/share/elasticsearch/config/certs/elasticsearch.crt
-# xpack.security.transport.ssl.certificate_authorities: [ "/usr/share/elasticsearch/config/certs/ca.crt" ]
+# Enable or disable encryption for transport traffic.
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.verification_mode: certificate
+xpack.security.transport.ssl.key: /usr/share/elasticsearch/config/certs/elasticsearch.key
+xpack.security.transport.ssl.certificate: /usr/share/elasticsearch/config/certs/elasticsearch.crt
+xpack.security.transport.ssl.certificate_authorities: [ "/usr/share/elasticsearch/config/certs/ca.crt" ]
 
 # Set the initial master nodes for the cluster. This is useful for multi-node clusters.
 # cluster.initial_master_nodes: ["node-1", "node-2"]

@@ -1,0 +1,64 @@
+# Set the name of your Elasticsearch cluster.
+cluster.name: docker-cluster
+
+# Set the network host to bind to. Use '0.0.0.0' to listen on all interfaces.
+network.host: 0.0.0.0
+
+# Set the port for HTTP traffic. Default is 9200.
+http.port: 9200
+
+bootstrap.memory_lock: true
+
+# Set the port for internal communication between nodes. Default is 9300.
+# transport.port: 9300
+
+# Set the discovery type to 'single-node' for a single-node, zen, multi-node cluster.
+discovery.type: single-node
+
+# Enable or disable security features. Set to true to enable X-Pack security.
+xpack.security.enabled: true
+
+# # Enable or disable encryption for HTTP traffic.
+# You'll have to uncomment the following lines if you want to use SSL for http and transport after running the setup-elasticsearch-ssl.sh script
+# xpack.security.http.ssl.enabled: true
+# xpack.security.http.ssl.verification_mode: certificate
+# xpack.security.http.ssl.key: /usr/share/elasticsearch/config/certs/elasticsearch.key
+# xpack.security.http.ssl.certificate: /usr/share/elasticsearch/config/certs/elasticsearch.crt
+# xpack.security.http.ssl.certificate_authorities: [ "/usr/share/elasticsearch/config/certs/ca.crt" ]
+
+# # Enable or disable encryption for transport traffic.
+# xpack.security.transport.ssl.enabled: true
+# xpack.security.transport.ssl.verification_mode: certificate
+# xpack.security.transport.ssl.key: /usr/share/elasticsearch/config/certs/elasticsearch.key
+# xpack.security.transport.ssl.certificate: /usr/share/elasticsearch/config/certs/elasticsearch.crt
+# xpack.security.transport.ssl.certificate_authorities: [ "/usr/share/elasticsearch/config/certs/ca.crt" ]
+
+# Set the initial master nodes for the cluster. This is useful for multi-node clusters.
+# cluster.initial_master_nodes: ["node-1", "node-2"]
+
+# Set the number of shards for a new index. Default is 1.
+# index.number_of_shards: 1
+
+# Set the number of replicas for a new index. Default is 1.
+# index.number_of_replicas: 1
+
+# Set the path to the data directory. This is where Elasticsearch stores its data.
+# path.data: /var/lib/elasticsearch
+
+# Set the path to the logs directory. This is where Elasticsearch stores its logs.
+# path.logs: /var/log/elasticsearch
+
+# Set the maximum number of bytes that can be used for memory-mapped files.
+# bootstrap.memory_lock: true
+
+# Set the maximum number of bytes that can be used for memory-mapped files.
+# indices.breaker.fielddata.limit: 60%
+
+# Set the maximum number of bytes that can be used for request circuit breaker.
+# indices.breaker.request.limit: 40%
+
+# Set the maximum number of bytes that can be used for total circuit breaker.
+# indices.breaker.total.limit: 70%
+
+# Set the maximum number of bytes that can be used for script compilation.
+# script.max_compilations_rate: 100/1m

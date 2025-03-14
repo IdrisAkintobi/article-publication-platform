@@ -1,0 +1,144 @@
+# Source for more compose conf
+# https://www.elastic.co/blog/getting-started-with-the-elastic-stack-and-docker-compose
+
+# Include mongodb compose
+include:
+    - .docker/mongo/docker-compose.mongo.yml
+
+services:
+    monstache:
+        image: rwynn/monstache:latest
+        container_name: monstache
+        volumes:
+            - .docker/monstache/config.toml:/config.toml
+            - elasticsearch-certs:/user/share/monstache/config/cert
+        depends_on:
+            - elasticsearch
+        environment:
+            MONSTACHE_ES_URLS: ${ELASTIC_URI_SECURED}
+            MONGO_DATABASE: ${MONGO_DATABASE}
+            MONSTACHE_COLLECTION: ${ARTICLE_COLLECTION}
+            MONSTACHE_CHANGE_STREAM_NS: ${MONGO_DATABASE}.${ARTICLE_COLLECTION}
+            MONSTACHE_MONGO_URL: ${MONGO_URI}
+            MONSTACHE_ES_USER: ${ELASTIC_USER}
+            MONSTACHE_ES_PASS: ${ELASTIC_PASSWORD}
+        command: ['-f', '/config.toml']
+        networks:
+            db-network:
+                ipv4_address: 172.16.32.50
+                ipv6_address: 2001:3984:3211::50
+
+    elasticsearch:
+        build: .docker/elasticsearch
+        container_name: elasticsearch
+        ports:
+            - '9200:9200'
+        environment:
+            ES_JAVA_OPTS: '-Xms512m -Xmx512m'
+            ELASTIC_URI: ${ELASTIC_URI}
+            ELASTIC_URI_SECURED: ${ELASTIC_URI_SECURED}
+            ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+        volumes:
+            - esdata:/usr/share/elasticsearch/data
+            - elasticsearch-certs:/usr/share/elasticsearch/config/certs
+            - ./.docker/elasticsearch/instances.yml:/usr/share/elasticsearch/instances.yml
+        depends_on:
+            - mongo-1
+        networks:
+            db-network:
+                ipv4_address: 172.16.32.40
+                ipv6_address: 2001:3984:3211::40
+        healthcheck:
+            test:
+                [
+                    'CMD-SHELL',
+                    "curl -s --cacert /usr/share/elasticsearch/config/certs/ca.crt ${ELASTIC_URI_SECURED} | grep -q 'missing authentication credentials'",
+                ]
+            interval: 10s
+            timeout: 15s
+            retries: 50
+
+    kibana:
+        build: .docker/kibana
+        container_name: kibana
+        ports:
+            - '5601:5601'
+        environment:
+            ELASTIC_URI: ${ELASTIC_URI_SECURED}
+            ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+            XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY: ${ENCRYPTION_KEY}
+            XPACK_SECURITY_ENCRYPTIONKEY: ${ENCRYPTION_KEY}
+            XPACK_REPORTING_ENCRYPTIONKEY: ${ENCRYPTION_KEY}
+        volumes:
+            - elasticsearch-certs:/usr/share/kibana/config/certs
+        depends_on:
+            - elasticsearch
+        networks:
+            app-network:
+                ipv4_address: 172.16.34.10
+                ipv6_address: 2001:3984:3212::10
+            db-network:
+
+    # logstash:
+    #     build: ./logstash
+    #     container_name: logstash
+    #     ports:
+    #         - '5000:5000'
+    #     environment:
+    #         LS_JAVA_OPTS: '-Xmx256m -Xms256m'
+    #         PLACEHOLDER_DB_DIR: ${LOGSTASH_PLACEHOLDER_DB_DIR}
+    #         MONGO_URI: ${MONGO_URI}
+    #         ELASTIC_URI: ${ELASTIC_URI_SECURED}
+    #         log.level: 'error'
+    #     volumes:
+    #         - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    #         - logstash_mongodb_data:/usr/share/logstash/data
+    #         - elasticsearch-certs:/etc/logstash/config/cert
+    #     depends_on:
+    #         - kibana
+    #     networks:
+    #         db-network:
+    #              ipv4_address: 172.16.32.60
+    #              ipv6_address: 2001:3984:3211::60
+
+    app:
+        build:
+            context: .
+            dockerfile: .docker/Dockerfile
+        container_name: app
+        ports:
+            - ${BUN_PORT}:${BUN_PORT}
+        depends_on:
+            - elasticsearch
+        environment:
+            MONGO_DATABASE: ${MONGO_DATABASE}
+            MONGO_URI: ${MONGO_URI}
+            ELASTIC_URI: ${ELASTIC_URI_SECURED}
+        networks:
+            app-network:
+                ipv4_address: 172.16.34.20
+                ipv6_address: 2001:3984:3212::20
+            db-network:
+        volumes:
+            - .:/usr/src/app
+            - elasticsearch-certs:/usr/share/app/config/cert
+        deploy:
+            resources:
+                limits:
+                    cpus: 1
+                    memory: 512M
+                reservations:
+                    cpus: 0.25
+                    memory: 128M
+
+networks:
+    app-network:
+        ipam:
+            config:
+                - subnet: '172.16.34.0/24'
+                - subnet: '2001:3984:3212::/64'
+
+volumes:
+    esdata:
+    elasticsearch-certs:
+    logstash_mongodb_data:

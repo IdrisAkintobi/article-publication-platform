@@ -1,0 +1,48 @@
+instances:
+  - name: "elasticsearch" 
+    ip: 
+      - "172.16.32.40"
+      - "2001:3984:3211::40"
+      - "127.0.0.1"
+    dns: 
+      - "host.docker.internal"
+      - "elasticsearch"
+      - "localhost"
+  - name: "kibana"
+    ip:
+      - "172.16.34.10"
+      - "2001:3984:3212::10"
+      - "127.0.0.1"
+    dns: 
+      - "host.docker.internal"
+      - "localhost"
+  - name: "monstache"
+    ip:
+      - "172.16.32.50"
+      - "2001:3984:3211::50"
+      - "127.0.0.1"
+    dns: 
+      - "host.docker.internal"
+      - "localhost"
+  - name: "logstash"
+    ip:
+      - "172.16.32.60"
+      - "2001:3984:3211::60"
+      - "127.0.0.1"
+    dns: 
+      - "host.docker.internal"
+      - "localhost"
+  - name: "app"
+    ip:
+      - "172.16.34.20"
+      - "2001:3984:3212::20"
+      - "127.0.0.1"
+    dns: 
+      - "host.docker.internal"
+      - "localhost"
+  - name: "CN=example,OU=IT,DC=mydomain,DC=com"
+    filename: "example"
+    ip: 
+      - "0.0.0.0"
+    dns: 
+      - "example.mydomain.com"

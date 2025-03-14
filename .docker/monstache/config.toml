@@ -1,0 +1,59 @@
+# MongoDB Connection
+mongo-url = '${MONSTACHE_MONGO_URL}'
+
+# Elasticsearch Connection
+elasticsearch-urls = ["${MONSTACHE_ES_URLS}"]
+
+# Enable change streaming for real-time sync
+change-stream-namespaces = ["${MONSTACHE_CHANGE_STREAM_NS}"]
+
+# Allow dropping Elasticsearch index on MongoDB collection deletion
+index-as-update = true
+
+# use the following user name for Elasticsearch basic auth
+elasticsearch-user = "${MONSTACHE_ES_USER}"
+# use the following password for Elasticsearch basic auth
+elasticsearch-password = "${MONSTACHE_ES_PASS}"
+
+# The size of the Elasticsearch HTTP connection pool.
+elasticsearch-max-conns = 4
+
+# Elasticsearch ssl setup
+# elasticsearch-pem-file = "/user/share/monstache/config/cert/ca.crt"
+# elasticsearch-pki-auth = { cert-file = "/user/share/monstache/config/cert/monstache.crt", key-file = "/user/share/monstache/config/cert/monstache.key" }
+
+# The number of seconds to wait on the initial health check to Elasticsearch to respond before giving up and exiting.
+elasticsearch-healthcheck-timeout-startup = 120
+
+# The number of seconds to wait for a post-initial health check to Elasticsearch to respond
+elasticsearch-healthcheck-timeout = 60
+
+# When elasticsearch-retry is true a failed request to Elasticsearch will be retried with an exponential backoff policy
+elasticsearch-retry = true
+
+# The number of seconds before a request to Elasticsearch times out.
+elasticsearch-client-timeout = 30
+
+# Logging (optional)
+verbose = true
+
+# Index only specific collections
+[[mapping]]
+namespace = "${MONSTACHE_CHANGE_STREAM_NS}" # MongoDB collection
+index = "${MONSTACHE_COLLECTION}_index"     # Elasticsearch index
+
+# Specify which fields to include in Elasticsearch
+[[pipeline]]
+namespace = "${MONGO_DATABASE}.${MONSTACHE_COLLECTION}"
+script = """
+  module.exports = function(doc) {
+    return {
+      id: doc._id,                      // Keep the same MongoDB document ID
+      title: doc.title,
+      content: doc.content,
+      author: doc.author,
+      publication_date: doc.publication_date,
+      comments: doc.comments             // Keep comments array
+    }
+  }
+  """

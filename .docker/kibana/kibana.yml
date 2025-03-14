@@ -1,0 +1,71 @@
+# Kibana is served by a back end server. This setting specifies the server name.
+server.name: kibana
+
+# The IP address to bind to. Use '0.0.0.0' to listen on all interfaces.
+server.host: '172.16.34.10'
+
+# The port to which Kibana will bind. Default is 5601.
+server.port: 5601
+
+# Default index pattern
+# kibana.defaultAppId: "home"
+
+# The base path for Kibana. If you are running Kibana behind a proxy, you might need to set this.
+# server.basePath: "/kibana"
+
+# The public URL of Kibana. This is used for generating URLs in the UI.
+server.publicBaseUrl: 'http://localhost:5601'
+
+# The URLs of the Elasticsearch instances to use for all your queries.
+elasticsearch.hosts: ['https://172.16.32.40:9200']
+
+# If your Elasticsearch is protected with basic authentication, specify the username and password here.
+elasticsearch.username: 'kibana_system'
+elasticsearch.password: 'elastic'
+
+# You'll have to uncomment the following lines if you want to use SSL after running the setup-elasticsearch-ssl.sh script
+# server.ssl.enabled: true
+# elasticsearch.ssl.verificationMode: certificate
+# elasticsearch.ssl.certificateAuthorities: ["/usr/share/kibana/config/certs/ca.crt"]
+# server.ssl.certificate: "/usr/share/kibana/config/certs/kibana.crt"
+# server.ssl.key: "/usr/share/kibana/config/certs/kibana.key"
+
+# Enables SSL for outgoing requests from Kibana to Elasticsearch.
+# elasticsearch.ssl.certificate: /path/to/your/client.crt
+# elasticsearch.ssl.key: /path/to/your/client.key
+# elasticsearch.ssl.certificateAuthorities: [ "/path/to/your/CA.pem" ]
+
+# Time in milliseconds to wait for Elasticsearch to respond to pings. Default is 5000ms.
+# elasticsearch.pingTimeout: 5000
+
+# Time in milliseconds to wait for responses from the back end or Elasticsearch. Default is 30000ms.
+# elasticsearch.requestTimeout: 30000
+
+# Time in milliseconds for Elasticsearch to wait for responses from shards. Set to 0 to disable.
+# elasticsearch.shardTimeout: 30000
+
+# Specifies the path where Kibana creates the process ID file.
+# pid.file: /var/run/kibana.pid
+
+# Enables you to specify a file where Kibana stores log output.
+# logging.dest: stdout
+
+# Set the value of this setting to true to log all events, including system usage information
+# and all requests.
+# logging.verbose: false
+
+# Set the value of this setting to true to log all events, including system usage information
+# and all requests.
+# logging.silent: false
+
+# Set the value of this setting to true to log all events, including system usage information
+# and all requests.
+# logging.quiet: false
+
+# Set the interval in milliseconds to sample system and process performance
+# metrics. Minimum is 100ms. Defaults to 5000ms.
+# ops.interval: 5000
+
+# Specifies locale to be used for all localizable strings, dates and number formats.
+# Supported languages are the following: English (default) "en", Chinese "zh-CN", Japanese "ja-JP", French "fr-FR".
+# i18n.locale: "en"

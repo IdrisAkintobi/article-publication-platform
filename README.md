@@ -71,3 +71,7 @@ bun start
 ```
 
 The application should be run with the docker compose command `docker-compose up` to start the services.
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).

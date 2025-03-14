@@ -4,6 +4,7 @@
     "type": "module",
     "version": "1.0.0",
     "private": true,
+    "license": "MIT",
     "scripts": {
         "build": "rm -rf dist && bun build.ts",
         "start": "bun dist/index.js",

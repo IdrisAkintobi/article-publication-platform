@@ -6,8 +6,19 @@ include:
     - .docker/mongo/docker-compose.mongo.yml
 
 services:
+    portainer:
+        image: portainer/portainer-ce:latest
+        container_name: portainer
+        restart: always
+        ports:
+            - "9000:9000"      # Portainer web UI
+            - "9443:9443"      # Optional: HTTPS UI
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock  # Access to Docker daemon
+            - portainer_data:/data
+
     monstache:
-        image: rwynn/monstache:latest
+        image: rwynn/monstache:6.7
         container_name: monstache
         volumes:
             - .docker/monstache/config.toml:/config.toml
@@ -142,3 +153,4 @@ volumes:
     esdata:
     elasticsearch-certs:
     logstash_mongodb_data:
+    portainer_data:
